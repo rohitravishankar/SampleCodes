@@ -59,21 +59,14 @@ class LinkedList {
     }
 
     public void deleteNode(int key) {
-        Node temporaryNode, previousNode = null;
-        if (head == null) {
-            return;
+        
+        Node temp = head;
+        Node prev = head;
+        while(temp.data!=key){
+            prev = temp;
+            temp = temp.next;
         }
-        temporaryNode = head;
-        if (temporaryNode.data == key && temporaryNode != null) {
-            head = head.next;
-            return;
-        }
-        while (temporaryNode != null && temporaryNode.data != key) {
-            previousNode = temporaryNode;
-            temporaryNode = temporaryNode.next;
-        }
-        previousNode.next = temporaryNode.next;
-        temporaryNode.next = null;
+        prev.next = temp.next;
     }
 
     public void printList() {
@@ -183,9 +176,10 @@ class LinkedList {
         System.out.println("\nCreated Linked list is:");
         llist.printList();
 
-        //llist.deleteNode(1); // Delete node at position 4
+        // Delete node at position 4
 
         System.out.println("\nLinked List after Deletion at position 4:");
+        llist.deleteNode(1);
         llist.printList();
 
         llist.swapPositions(2, 1);
