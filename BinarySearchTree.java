@@ -84,11 +84,12 @@ public class BinarySearchTree {
 	        // val is less than root's key
 	        return search(root.right, key);
 	    }
-	 // This method mainly calls deleteRec()
+	 
 	    /* A recursive function to insert a new key in BST */
 	    Node delete(Node root, int key)
 	    {
-	        /* Base Case: If the tree is empty */
+	        /* Base Case: If the t
+	         * ree is empty */
 	        if (root == null)  return root;
 	 
 	        /* Otherwise, recur down the tree */
@@ -128,6 +129,17 @@ public class BinarySearchTree {
 	        return minv;
 	    }
 	    
+	    int getLeafCount(Node node) 
+	    {
+	        if (node == null)
+	            return 0;
+	        if (node.left == null && node.right == null)
+	            return 1;
+	        else
+	            return getLeafCount(node.left) + getLeafCount(node.right);
+	    }
+	    
+	    
 	    Node lca(Node node, int n1, int n2) 
 	    {
 	        if (node == null)
@@ -143,127 +155,23 @@ public class BinarySearchTree {
 	  
 	        return node;
 	    }
- /*Count the number of nodes in Linked List */
-        int n = countNodes(head);
- 
-        /* Construct BST */
-        return sortedListToBSTRecur(n);
-    }
- 
-    /* The main function that constructs balanced BST and
-       returns root of it.
-       n  --> No. of nodes in the Doubly Linked List */
-    Node sortedListToBSTRecur(int n)
-    {
-        /* Base Case */
-        if (n <= 0)
-            return null;
- 
-        /* Recursively construct the left subtree */
-        Node left = sortedListToBSTRecur(n / 2);
- 
-        /* head_ref now refers to middle node,
-           make middle node as root of BST*/
-        Node root = head;
- 
-        // Set pointer to left subtree
-        root.prev = left;
- 
-        /* Change head pointer of Linked List for parent
-           recursive calls */
-        head = head.next;
- 
-        /* Recursively construct the right subtree and link it
-           with root. The number of nodes in right subtree  is
-           total nodes - nodes in left subtree - 1 (for root) */
-        root.next = sortedListToBSTRecur(n - n / 2 - 1);
- 
-        return root;
-    }
- 
-    /* UTILITY FUNCTIONS */
-    /* A utility function that returns count of nodes in a
-       given Linked List */
-    int countNodes(Node head)
-    {
-        int count = 0;
-        Node temp = head;
-        while (temp != null)
-        {
-            temp = temp.next;
-            count++;
-        }
-        return count;
-    }
- 
-    /* Function to insert a node at the beginging of
-       the Doubly Linked List */
-    void push(int new_data)
-    {
-        /* allocate node */
-        Node new_node = new Node(new_data);
- 
-        /* since we are adding at the begining,
-           prev is always NULL */
-        new_node.prev = null;
- 
-        /* link the old list off the new node */
-        new_node.next = head;
- 
-        /* change prev of head node to new node */
-        if (head != null)
-            head.prev = new_node;
- 
-        /* move the head to point to the new node */
-        head = new_node;
-    }
- 
-    /* Function to print nodes in a given linked list */
-    void printList()
-    {
-        Node node = head;
-        while (node != null)
-        {
-            System.out.print(node.data + " ");
-            node = node.next;
-        }
-    }
- 
-    /* A utility function to print preorder traversal of BST */
-    void preOrder(Node node)
-    {
-        if (node == null)
-            return;
-        System.out.print(node.data + " ");
-        preOrder(node.prev);
-        preOrder(node.next);
-    }
- 
-    /* Drier program to test above functions */
-    public static void main(String[] args)
-    {
-        LinkedList llist = new LinkedList();
- 
-        /* Let us create a sorted linked list to test the functions
-           Created linked list will be 7->6->5->4->3->2->1 */
-        llist.push(7);
-        llist.push(6);
-        llist.push(5);
-        llist.push(4);
-        llist.push(3);
-        llist.push(2);
-        llist.push(1);
- 
-        System.out.println("Given Linked List ");
-        llist.printList();
- 
-        /* Convert List to BST */
-        Node root = llist.sortedListToBST();
-        System.out.println("");
-        System.out.println("Pre-Order Traversal of constructed BST ");
-        llist.preOrder(root);
-    }
-}
+	    int maxDepth(Node node) 
+	    {
+	        if (node == null)
+	            return 0;
+	        else
+	        {
+	            /* compute the depth of each subtree */
+	            int lDepth = maxDepth(node.left);
+	            int rDepth = maxDepth(node.right);
+	  
+	            /* use the larger one */
+	            if (lDepth > rDepth)
+	                return (lDepth + 1);
+	             else
+	                return (rDepth + 1);
+	        }
+	    }
 	 
 	    // Driver Program to test above functions
 	    public static void main(String[] args) {
@@ -276,6 +184,10 @@ public class BinarySearchTree {
 	        tree.insert(root,70);
 	        tree.insert(root,60);
 	        tree.insert(root,80);
+	        
+	        System.out.print("\nLeaf Node count of a binary tree :");tree.getLeafCount(root);
+	        System.out.println("\nThe lowest common ancestor to 60 & 80 is: ");tree.lca(root, 80, 60);
+	        System.out.print("\nDepth of a binary tree :");tree.maxDepth(root);
 	        
 	        System.out.println("\nThe key 80 can be reached in the following manner: ");tree.search(root,80);
 	        // print inorder, preorder, postorder traversal of the BS
