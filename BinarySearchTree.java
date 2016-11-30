@@ -139,8 +139,7 @@ public class BinarySearchTree {
 	            return getLeafCount(node.left) + getLeafCount(node.right);
 	    }
 	    
-	    
-	    Node lca(Node node, int n1, int n2) 
+	    	    Node lca(Node node, int n1, int n2) 
 	    {
 	        if (node == null)
 	            return null;
@@ -172,6 +171,27 @@ public class BinarySearchTree {
 	                return (rDepth + 1);
 	        }
 	    }
+	int Ceil(Node node, int input) {
+         
+        // Base case
+        if (node == null) {
+            return -1;
+        }
+ 
+        // We found equal key
+        if (node.data == input) {
+            return node.data;
+        }
+ 
+        // If root's key is smaller, ceil must be in right subtree
+        if (node.data < input) {
+            return Ceil(node.right, input);
+        }
+ 
+        // Else, either left subtree or root has the ceil value
+        int ceil = Ceil(node.left, input);
+        return (ceil >= input) ? ceil : node.data;
+    }
 	 
 	    // Driver Program to test above functions
 	    public static void main(String[] args) {
@@ -192,7 +212,9 @@ public class BinarySearchTree {
 	        System.out.println("\nThe key 80 can be reached in the following manner: ");tree.search(root,80);
 	        // print inorder, preorder, postorder traversal of the BS
 	      
-	      
+		for (int i = 0; i < 16; i++) {
+       			     System.out.println(i + " " + tree.Ceil(root, i));
+        	}
 	       System.out.print("\nThe tree in inorder traversal : ");tree.inorder(root);
 	       System.out.print("\nThe tree in preOrder traversal : ");tree.preOrder(root);
 	       System.out.print("\nThe tree in postOrder traversal : ");tree.postOrder(root);
