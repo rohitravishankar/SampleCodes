@@ -1,4 +1,4 @@
-package demo1;
+package SampleCodes;
 
 public class BinarySearchTree {
 		 
@@ -179,18 +179,18 @@ public class BinarySearchTree {
         }
  
         // We found equal key
-        if (node.data == input) {
-            return node.data;
+        if (node.key == input) {
+            return node.key;
         }
  
         // If root's key is smaller, ceil must be in right subtree
-        if (node.data < input) {
+        if (node.key < input) {
             return Ceil(node.right, input);
         }
  
         // Else, either left subtree or root has the ceil value
         int ceil = Ceil(node.left, input);
-        return (ceil >= input) ? ceil : node.data;
+        return (ceil >= input) ? ceil : node.key;
     }
 	 
 	    // Driver Program to test above functions
